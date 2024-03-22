@@ -16,6 +16,9 @@ public class ProductModel implements Serializable {
     private UUID idProduct;
     private String name;
     private BigDecimal value;
+    private int quantity;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     public UUID getIdProduct() {
         return idProduct;
@@ -36,4 +39,21 @@ public class ProductModel implements Serializable {
     public void setValue(BigDecimal value) {
         this.value = value;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

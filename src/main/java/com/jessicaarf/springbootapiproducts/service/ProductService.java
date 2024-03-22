@@ -6,12 +6,19 @@ import com.jessicaarf.springbootapiproducts.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,6 +26,8 @@ import java.util.UUID;
 @Service
 public class ProductService {
 
+    @Value("${upload.directory}")
+    private String uploadDir;
     @Autowired
     private ProductRepository productRepository;
 
@@ -26,6 +35,25 @@ public class ProductService {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productDto, productModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
+    }
+
+    public void uploadImage(UUID id, MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Arquivo vazio");
+        }
+
+        String uniqueFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+        Path uploadPath = Paths.get(uploadDir);
+        Path filePath = uploadPath.resolve(uniqueFileName);
+
+        try {
+
+            Files.copy(file.getInputStream(), filePath);
+
+        } catch (IOException e) {
+            throw new IOException("Falha ao salvar o arquivo", e);
+        }
     }
 
     public ResponseEntity<List<ProductModel>> getAllProducts() {
