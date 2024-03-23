@@ -2,6 +2,7 @@ package com.jessicaarf.springbootapiproducts.controllers;
 
 import com.jessicaarf.springbootapiproducts.dtos.ProductDto;
 import com.jessicaarf.springbootapiproducts.models.ProductModel;
+import com.jessicaarf.springbootapiproducts.service.ImageService;
 import com.jessicaarf.springbootapiproducts.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    ImageService imageService;
 
     @PostMapping
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductDto productDto) {
@@ -29,7 +32,7 @@ public class ProductController {
 
     @PostMapping("/{id}/image")
     public String uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException {
-        productService.uploadImage(id, file);
+       imageService.uploadImage(id, file);
         return "Imagem do produto " + id + " foi salva com sucesso!";
     }
     @GetMapping
@@ -51,5 +54,6 @@ public class ProductController {
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id) {
         return productService.deleteProduct(id);
     }
+
 }
 
