@@ -19,6 +19,7 @@ public class ProductModel implements Serializable {
     private int quantity;
     @Column(columnDefinition = "TEXT")
     private String description;
+    private String imageUrl;
 
     public UUID getIdProduct() {
         return idProduct;
@@ -56,4 +57,11 @@ public class ProductModel implements Serializable {
         this.description = description;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

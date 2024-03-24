@@ -33,7 +33,7 @@ public class ProductController {
     @PostMapping("/{id}/image")
     public String uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException {
        imageService.uploadImage(id, file);
-        return "Imagem do produto " + id + " foi salva com sucesso!";
+        return "Product image " + id + " has been saved sucessfuly.";
     }
     @GetMapping
     public ResponseEntity<List<ProductModel>> getAllProducts() {
