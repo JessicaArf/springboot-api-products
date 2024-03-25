@@ -30,11 +30,6 @@ public class ProductController {
         return productService.saveProduct(productDto);
     }
 
-    @PostMapping("/{id}/image")
-    public String uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException {
-       imageService.uploadImage(id, file);
-        return "Product image " + id + " has been saved sucessfuly.";
-    }
     @GetMapping
     public ResponseEntity<List<ProductModel>> getAllProducts() {
         return productService.getAllProducts();
@@ -53,6 +48,36 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id) {
         return productService.deleteProduct(id);
+    }
+
+    @PostMapping("/{id}/image")
+    public ResponseEntity<String> uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException {
+       try{
+           imageService.uploadImage(id, file);
+           return ResponseEntity.ok().body("Image uploaded sucessfully for product with id: " + id);
+       } catch(Exception e){
+           return ResponseEntity.badRequest().body("Error uploading image: " + e.getMessage());
+       }
+    }
+
+    @PutMapping("/{id}/image")
+    public ResponseEntity<Object> updateImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException{
+       try{
+           imageService.updateImage(id, file);
+           return ResponseEntity.ok().build();
+       } catch (IOException e){
+           return ResponseEntity.badRequest().body("Unable to update the image");
+       }
+    }
+
+    @DeleteMapping("/{id}/image")
+    public ResponseEntity<Object> deleteImage(@PathVariable(value = "id") UUID id) {
+        try {
+            imageService.deleteImage(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(("Error when deleting image."));
+        }
     }
 
 }

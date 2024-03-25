@@ -1,6 +1,10 @@
 package com.jessicaarf.springbootapiproducts.models;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,11 +12,15 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_PRODUCTS")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private UUID idProduct;
     private String name;
     private BigDecimal value;
@@ -21,47 +29,4 @@ public class ProductModel implements Serializable {
     private String description;
     private String imageUrl;
 
-    public UUID getIdProduct() {
-        return idProduct;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
