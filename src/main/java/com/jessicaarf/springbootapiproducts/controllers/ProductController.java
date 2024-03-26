@@ -1,3 +1,5 @@
+
+
 package com.jessicaarf.springbootapiproducts.controllers;
 
 import com.jessicaarf.springbootapiproducts.dtos.ProductDto;
@@ -8,7 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+        import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
@@ -52,22 +54,22 @@ public class ProductController {
 
     @PostMapping("/{id}/image")
     public ResponseEntity<String> uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException {
-       try{
-           imageService.uploadImage(id, file);
-           return ResponseEntity.ok().body("Image uploaded sucessfully for product with id: " + id);
-       } catch(Exception e){
-           return ResponseEntity.badRequest().body("Error uploading image: " + e.getMessage());
-       }
+        try{
+            imageService.uploadImage(id, file);
+            return ResponseEntity.ok().body("Image uploaded sucessfully for product with id: " + id);
+        } catch(Exception e){
+            return ResponseEntity.badRequest().body("Error uploading image: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}/image")
     public ResponseEntity<Object> updateImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) throws IOException{
-       try{
-           imageService.updateImage(id, file);
-           return ResponseEntity.ok().build();
-       } catch (IOException e){
-           return ResponseEntity.badRequest().body("Unable to update the image");
-       }
+        try{
+            imageService.updateImage(id, file);
+            return ResponseEntity.ok().build();
+        } catch (IOException e){
+            return ResponseEntity.badRequest().body("Unable to update the image");
+        }
     }
 
     @DeleteMapping("/{id}/image")
@@ -81,4 +83,3 @@ public class ProductController {
     }
 
 }
-

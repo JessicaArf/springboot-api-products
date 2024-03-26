@@ -28,8 +28,14 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
+
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductDto productDto) {
         log.info("Saving a new product: {}", productDto);
+        Optional<ProductModel> existingProduct = productRepository.findByName(productDto.name());
+        if (existingProduct.isPresent()) {
+            log.error("Product with name '{}' already exists.", productDto.name());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productDto, productModel);
         try {
