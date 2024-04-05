@@ -1,8 +1,6 @@
 package com.jessicaarf.springbootapiproducts.controllers;
 
 import com.jessicaarf.springbootapiproducts.dtos.ProductDto;
-import com.jessicaarf.springbootapiproducts.exceptions.FileProcessingException;
-import com.jessicaarf.springbootapiproducts.exceptions.ImageAlreadyExistsException;
 import com.jessicaarf.springbootapiproducts.models.ProductModel;
 import com.jessicaarf.springbootapiproducts.service.ImageService;
 import com.jessicaarf.springbootapiproducts.service.ProductService;

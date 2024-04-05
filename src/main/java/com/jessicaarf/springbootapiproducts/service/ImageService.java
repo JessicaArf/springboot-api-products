@@ -28,8 +28,11 @@ public class ImageService {
 
     @Value("${upload.directory}")
     private String uploadDir;
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ImageService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public ResponseEntity<String> uploadImage(UUID id, MultipartFile file) throws IOException {
         log.info("Starting image upload for product id: {}", id);

@@ -25,8 +25,12 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class ProductService {
-    @Autowired
-    ProductRepository productRepository;
+
+   private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
 
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductDto productDto) {

@@ -3,7 +3,9 @@ package com.jessicaarf.springbootapiproducts.controllers;
 import com.jessicaarf.springbootapiproducts.dtos.LoginRequest;
 import com.jessicaarf.springbootapiproducts.dtos.LoginResponse;
 import com.jessicaarf.springbootapiproducts.models.RoleModel;
+import com.jessicaarf.springbootapiproducts.models.UserModel;
 import com.jessicaarf.springbootapiproducts.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,19 +14,21 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
+@RequestMapping("/login")
 public class TokenController {
 
     private final JwtEncoder jwtEncoder;
     private final UserRepository userRepository;
-
-    private BCryptPasswordEncoder passwordEncoder;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.jwtEncoder = jwtEncoder;
@@ -32,25 +36,26 @@ public class TokenController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
+    @PostMapping
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
-        var user = userRepository.findByUsername(loginRequest.username());
+        Optional<UserModel> user = userRepository.findByUsername(loginRequest.username());
 
-        if(user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)){
-            throw new BadCredentialsException("user or passsword is invalid!");
+        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
+            log.error("Login failed.", loginRequest.username());
+            throw new BadCredentialsException("User or passsword is invalid.");
         }
 
-        var now = Instant.now();
+        Instant now = Instant.now();
 
-        var expiresIn = 300L;
+        long expiresIn = 300L;
 
-        var scopes = user.get().getRoles()
+        String scopes = user.get().getRoles()
                 .stream()
                 .map(RoleModel::getName)
                 .collect(Collectors.joining(" "));
 
-        var claims = JwtClaimsSet.builder()
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("mybackend")
                 .subject(user.get().getUserId().toString())
                 .issuedAt(now)
@@ -58,8 +63,9 @@ public class TokenController {
                 .claim("scope", scopes)
                 .build();
 
-        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        String jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
+        log.info("User {} logged in sucessfully.", user);
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
     }
 
