@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -34,6 +36,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public ResponseEntity<List<UserModel>> listUsers() {
       return userService.listUsers();
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    public ResponseEntity<String> deactivateUser(@PathVariable(value = "id") UUID id)  {
+       return userService.deactivateUser(id);
     }
 
 }

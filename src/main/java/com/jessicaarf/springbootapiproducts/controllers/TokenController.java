@@ -65,7 +65,7 @@ public class TokenController {
 
         String jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        log.info("User {} logged in sucessfully.", user);
+        log.info("User {} logged in sucessfully.",loginRequest.username());
         return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
     }
 

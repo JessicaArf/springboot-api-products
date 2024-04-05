@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Configuration
@@ -32,7 +33,7 @@ public class AdminUserConfig implements CommandLineRunner {
 
        RoleModel roleAdmin = roleRepository.findByName(RoleModel.Values.admin.name());
 
-        var userAdmin = userRepository.findByUsername("admin");
+        Optional<UserModel> userAdmin = userRepository.findByUsername("admin");
 
         userAdmin.ifPresentOrElse(
                 user -> {
@@ -43,6 +44,7 @@ public class AdminUserConfig implements CommandLineRunner {
                     user.setUsername("admin");
                     user.setPassword(passwordEncoder.encode("admin"));
                     user.setRoles(Set.of(roleAdmin));
+                    user.setActive(true);
                     userRepository.save(user);
                 }
         );

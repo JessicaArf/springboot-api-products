@@ -32,6 +32,8 @@ public class UserModel {
     )
     private Set<RoleModel> roles;
 
+    private boolean isActive;
+
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password);
     }
