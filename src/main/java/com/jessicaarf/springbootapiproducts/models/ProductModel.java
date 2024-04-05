@@ -42,4 +42,8 @@ public class ProductModel implements Serializable {
     @UpdateTimestamp
     private Instant updatedTimestamp;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserModel userModel;
+
 }

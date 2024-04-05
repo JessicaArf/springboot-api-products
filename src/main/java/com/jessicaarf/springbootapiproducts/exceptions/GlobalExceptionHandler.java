@@ -18,4 +18,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
     }
 
+    @ExceptionHandler(ImageAlreadyExistsException.class)
+    public ResponseEntity<Object> handleImageAlreadyException(ProductNotFoundException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
 }

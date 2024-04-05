@@ -56,7 +56,7 @@ public ResponseEntity<List<ProductModel>> getAllProducts() {
     }
 }
 
-public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id) {
+public ResponseEntity<ProductModel> getOneProduct(@PathVariable(value = "id") UUID id) {
     log.info("Fetching product with id: {}", id);
     Optional<ProductModel> productO = productRepository.findById(id);
     if (productO.isEmpty()) {
@@ -66,7 +66,7 @@ public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id") UUID id)
     return ResponseEntity.status(HttpStatus.OK).body(productO.get());
 }
 
-public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto) {
+public ResponseEntity<ProductModel> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody @Valid ProductDto productDto) {
     log.info("Updating product with id: {}", id);
     Optional<ProductModel> productO = productRepository.findById(id);
     if (productO.isEmpty()) {
@@ -77,7 +77,7 @@ public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id,
     return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(productModel));
 }
 
-public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id) {
+public ResponseEntity<String> deleteProduct(@PathVariable(value = "id") UUID id) {
     log.info("Deleting product with id: {}", id);
     Optional<ProductModel> productO = productRepository.findById(id);
     if (productO.isEmpty()) {
