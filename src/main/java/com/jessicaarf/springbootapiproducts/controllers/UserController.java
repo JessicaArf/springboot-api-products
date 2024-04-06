@@ -29,19 +29,32 @@ public class UserController {
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public ResponseEntity<UserModel> newUser(@RequestBody @Valid UserDto userDto) {
-        return userService.newUser(userDto);
+        return userService.createNewUser(userDto);
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('SCOPE_admin')")
-    public ResponseEntity<List<UserModel>> listUsers() {
-      return userService.listUsers();
+    public ResponseEntity<List<UserModel>> listAllUsers() {
+        return userService.listAllUsers();
     }
+
+    @GetMapping("/actives")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    public ResponseEntity<List<UserModel>> listActiveUsers() {
+        return userService.listActiveUsers();
+    }
+
+    @GetMapping("/inactives")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    public ResponseEntity<List<UserModel>> listInactiveUsers() {
+        return userService.listInactiveUsers();
+    }
+
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('SCOPE_admin')")
-    public ResponseEntity<String> deactivateUser(@PathVariable(value = "id") UUID id)  {
-       return userService.deactivateUser(id);
+    public ResponseEntity<String> deactivateUser(@PathVariable(value = "id") UUID id) {
+        return userService.deactivateUser(id);
     }
 
 }

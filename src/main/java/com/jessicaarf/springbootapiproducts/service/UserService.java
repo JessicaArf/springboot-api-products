@@ -1,6 +1,7 @@
 package com.jessicaarf.springbootapiproducts.service;
 
 import com.jessicaarf.springbootapiproducts.dtos.UserDto;
+import com.jessicaarf.springbootapiproducts.exceptions.NoUserFoundException;
 import com.jessicaarf.springbootapiproducts.exceptions.UserAlreadyExistsException;
 import com.jessicaarf.springbootapiproducts.exceptions.UserNotFoundException;
 import com.jessicaarf.springbootapiproducts.models.RoleModel;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -37,7 +35,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ResponseEntity<UserModel> newUser(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<UserModel> createNewUser(@RequestBody @Valid UserDto userDto) {
 
         RoleModel basicRole = roleRepository.findByName(RoleModel.Values.basic.name());
 
@@ -59,7 +57,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<List<UserModel>> listUsers() {
+    public ResponseEntity<List<UserModel>> listAllUsers() {
         try {
             log.info("Fetching all users");
             return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
@@ -69,11 +67,45 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<String> deactivateUser(@PathVariable(value = "id") UUID id) {
+    public ResponseEntity<List<UserModel>> listActiveUsers() {
+        try {
+            List<UserModel> activeUsers = userRepository.findByIsActive(true);
+
+            if (activeUsers.isEmpty()) {
+                log.info("No active users found.");
+                throw new NoUserFoundException("No active users found");
+            } else {
+                log.info("Retrieved {} active users.", activeUsers.size());
+                return ResponseEntity.ok(activeUsers);
+            }
+        } catch (DataAccessException e) {
+            log.error("Error fetching active users: {}", e.getMessage(), e); // Log exception for debugging
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    public ResponseEntity<List<UserModel>> listInactiveUsers() {
+        try {
+            List<UserModel> inactiveUsers = userRepository.findByIsActive(false);
+
+            if (inactiveUsers.isEmpty()) {
+                log.info("No inactive users found.");
+                throw new NoUserFoundException("No active users found");
+            } else {
+                log.info("Retrieved {} inactive users.", inactiveUsers.size());
+                return ResponseEntity.ok(inactiveUsers);
+            }
+        } catch (DataAccessException e) {
+            log.error("Error fetching inactive users: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    public ResponseEntity<String> deactivateUser(@PathVariable(value = "userId") UUID id) {
         log.info("deactivating user with id: {}", id);
         Optional<UserModel> userToDeactive = userRepository.findById(id);
         if (userToDeactive.isEmpty()) {
-            throw new UserNotFoundException("User with ID " + id + " not found.");
+            throw new UserNotFoundException("User with id " + id + " not found.");
         }
         UserModel user = userToDeactive.get();
         user.setActive(false);

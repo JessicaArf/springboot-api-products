@@ -987,3 +987,43 @@ Caused by: org.postgresql.util.PSQLException: ERRO: coluna um1_0.is_active não 
 2024-04-05T20:04:21.392-03:00  INFO 12404 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-04-05T20:04:21.422-03:00  INFO 12404 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-04-05T20:04:21.474-03:00  INFO 12404 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-05T21:06:17.609-03:00  INFO 13368 --- [restartedMain] c.j.s.SpringbootApiProductsApplication   : Starting SpringbootApiProductsApplication using Java 19.0.2 with PID 13368 (C:\Users\jessi\OneDrive\Documentos\springboot-api-products\target\classes started by jessi in C:\Users\jessi\OneDrive\Documentos\springboot-api-products)
+2024-04-05T21:06:17.618-03:00  INFO 13368 --- [restartedMain] c.j.s.SpringbootApiProductsApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-04-05T21:06:17.844-03:00  INFO 13368 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-04-05T21:06:17.846-03:00  INFO 13368 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-04-05T21:06:21.207-03:00  INFO 13368 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-05T21:06:21.479-03:00  INFO 13368 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 238 ms. Found 3 JPA repository interfaces.
+2024-04-05T21:06:25.016-03:00  INFO 13368 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-04-05T21:06:25.074-03:00  INFO 13368 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-04-05T21:06:25.074-03:00  INFO 13368 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2024-04-05T21:06:25.281-03:00  INFO 13368 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-04-05T21:06:25.282-03:00  INFO 13368 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7432 ms
+2024-04-05T21:06:25.832-03:00  INFO 13368 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-05T21:06:26.962-03:00  INFO 13368 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7b44e0a
+2024-04-05T21:06:27.053-03:00  INFO 13368 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-05T21:06:27.828-03:00  INFO 13368 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-05T21:06:28.222-03:00  INFO 13368 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-05T21:06:28.401-03:00  INFO 13368 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-05T21:06:29.424-03:00  INFO 13368 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-05T21:06:33.118-03:00  INFO 13368 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-05T21:06:33.460-03:00  INFO 13368 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-05T21:06:35.587-03:00  WARN 13368 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-04-05T21:06:37.100-03:00  INFO 13368 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@39221675, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@349d3461, org.springframework.security.web.context.SecurityContextHolderFilter@34680e4b, org.springframework.security.web.header.HeaderWriterFilter@4e8684af, org.springframework.web.filter.CorsFilter@4a5bc02a, org.springframework.security.web.authentication.logout.LogoutFilter@54fdbef4, org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter@1cec4a82, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4aca46ab, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@186f306f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@15e35f0f, org.springframework.security.web.session.SessionManagementFilter@38b5b5b5, org.springframework.security.web.access.ExceptionTranslationFilter@5e246dd1, org.springframework.security.web.access.intercept.AuthorizationFilter@120e396d]
+2024-04-05T21:06:38.082-03:00  INFO 13368 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-04-05T21:06:38.223-03:00  INFO 13368 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-04-05T21:06:38.514-03:00  INFO 13368 --- [restartedMain] c.j.s.SpringbootApiProductsApplication   : Started SpringbootApiProductsApplication in 22.846 seconds (process running for 25.055)
+2024-04-05T21:07:46.133-03:00  INFO 13368 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-05T21:07:46.136-03:00  INFO 13368 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-05T21:07:46.140-03:00  INFO 13368 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-04-05T21:07:47.352-03:00  INFO 13368 --- [http-nio-8080-exec-1] c.j.s.controllers.TokenController        : User admin logged in sucessfully.
+2024-04-05T21:07:57.563-03:00 ERROR 13368 --- [http-nio-8080-exec-3] c.j.s.controllers.TokenController        : Login failed.
+2024-04-05T21:08:12.376-03:00  INFO 13368 --- [http-nio-8080-exec-4] c.j.s.controllers.TokenController        : User admin logged in sucessfully.
+2024-04-05T21:09:08.909-03:00  INFO 13368 --- [http-nio-8080-exec-9] c.j.s.service.UserService                : Fetching all users
+2024-04-05T21:10:04.055-03:00  INFO 13368 --- [http-nio-8080-exec-2] c.j.s.service.UserService                : deactivating user with id: 2ebebd2d-d4be-4ce5-b82d-99f497481dbd
+2024-04-05T21:10:04.145-03:00  INFO 13368 --- [http-nio-8080-exec-2] c.j.s.service.UserService                : User deactived successfully
+2024-04-05T21:10:09.280-03:00  INFO 13368 --- [http-nio-8080-exec-1] c.j.s.service.UserService                : Fetching all users
+2024-04-05T21:10:20.807-03:00  INFO 13368 --- [http-nio-8080-exec-3] c.j.s.service.UserService                : Retrieved 3 active users.
+2024-04-05T21:10:30.611-03:00  INFO 13368 --- [http-nio-8080-exec-4] c.j.s.service.UserService                : Retrieved 2 inactive users.
+2024-04-05T21:10:50.593-03:00  INFO 13368 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-05T21:10:50.610-03:00  INFO 13368 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-05T21:10:50.650-03:00  INFO 13368 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

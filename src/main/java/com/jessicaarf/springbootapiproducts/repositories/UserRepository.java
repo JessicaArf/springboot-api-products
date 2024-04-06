@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,6 +16,6 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<UserModel, UUID> {
     Optional<UserModel> findByUsername(String username);
     Optional<UserModel> findByUsernameIgnoreCase(String username);
+    List<UserModel> findByIsActive(Boolean status);
 
-    Optional<UserModel> findByIsActive(Boolean status);
 }
