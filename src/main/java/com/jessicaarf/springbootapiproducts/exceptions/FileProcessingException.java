@@ -11,7 +11,7 @@ public class FileProcessingException extends RuntimeException {
     }
 
     public FileProcessingException(String message, HttpStatus httpStatus, Throwable cause) {
-        super(message);
+        super(message, cause);
         this.httpStatus = httpStatus;
     }
 

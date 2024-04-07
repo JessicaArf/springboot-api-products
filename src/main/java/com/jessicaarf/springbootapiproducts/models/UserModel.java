@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
@@ -13,7 +14,8 @@ import java.util.UUID;
 @Table(name = "tb_users")
 @Getter
 @Setter
-public class UserModel {
+public class UserModel implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

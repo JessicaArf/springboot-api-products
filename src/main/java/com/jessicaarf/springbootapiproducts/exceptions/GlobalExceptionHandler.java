@@ -38,5 +38,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<Object> handleAuthorizationException(AuthorizationException e){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
 
 }

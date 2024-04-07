@@ -37,7 +37,7 @@ public class UserService {
 
     public ResponseEntity<UserModel> createNewUser(@RequestBody @Valid UserDto userDto) {
 
-        RoleModel basicRole = roleRepository.findByName(RoleModel.Values.basic.name());
+        RoleModel basicRole = roleRepository.findByName(RoleModel.Values.BASIC.name());
 
         Optional<UserModel> userFromDb = userRepository.findByUsernameIgnoreCase(userDto.username());
         if (userFromDb.isPresent()) {

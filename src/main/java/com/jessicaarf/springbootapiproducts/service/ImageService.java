@@ -6,11 +6,11 @@ import com.jessicaarf.springbootapiproducts.exceptions.ProductNotFoundException;
 import com.jessicaarf.springbootapiproducts.models.ProductModel;
 import com.jessicaarf.springbootapiproducts.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -30,11 +29,14 @@ public class ImageService {
     private String uploadDir;
     private final ProductRepository productRepository;
 
-    public ImageService(ProductRepository productRepository) {
+    private final AuthorizationService authorizationService;
+
+    public ImageService(ProductRepository productRepository, AuthorizationService authorizationService) {
         this.productRepository = productRepository;
+        this.authorizationService = authorizationService;
     }
 
-    public ResponseEntity<String> uploadImage(UUID id, MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadImage(UUID id, MultipartFile file, JwtAuthenticationToken token) throws IOException {
         log.info("Starting image upload for product id: {}", id);
         try {
             ProductModel product = getProductById(id);
@@ -42,6 +44,7 @@ public class ImageService {
                 log.info("Image update not required. Product already has an image.");
                 throw new ImageAlreadyExistsException("The product image already exists. To update the image, please use the update endpoint instead of the upload endpoint.");
             }
+            authorizationService.ensureAuthorized(token, product);
             validateImageFile(file);
             saveImage(id, file);
             log.info("Image uploaded successfully for product with id: {}", id);
@@ -52,11 +55,11 @@ public class ImageService {
         }
     }
 
-    public ResponseEntity<String> updateImage(UUID id, MultipartFile file) throws IOException {
+    public ResponseEntity<String> updateImage(UUID id, MultipartFile file, JwtAuthenticationToken token) throws IOException {
         log.info("Starting image update for product id: {}", id);
         try {
             validateImageFile(file);
-            deleteImage(id);
+            deleteImage(id, token);
             saveImage(id, file);
             log.info("Image updated successfully for product with id: {}", id);
             return ResponseEntity.status(HttpStatus.OK).body("Image updated successfully");
@@ -69,10 +72,11 @@ public class ImageService {
         }
     }
 
-    public ResponseEntity<String> deleteImage(UUID id) {
+    public ResponseEntity<String> deleteImage(UUID id, JwtAuthenticationToken token) {
         log.info("Starting image deletion for product id: {}", id);
         try {
             ProductModel product = getProductById(id);
+            authorizationService.ensureAuthorized(token, product);
             product.setImageUrl(null);
             productRepository.save(product);
             log.info("Image deleted successfully for product with id: {}", id);
@@ -131,12 +135,9 @@ public class ImageService {
     }
 
     private ProductModel getProductById(UUID id) {
-        Optional<ProductModel> productO = productRepository.findById(id);
-        if (productO.isPresent()) {
-            return productO.get();
-        } else {
-            throw new ProductNotFoundException("Product not found.");
-        }
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("User not found"));
     }
 
 }
+

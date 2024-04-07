@@ -1,3 +1,4 @@
+
 package com.jessicaarf.springbootapiproducts.controllers;
 
 import com.jessicaarf.springbootapiproducts.dtos.UserDto;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,32 +27,32 @@ public class UserController {
 
     @Transactional
     @PostMapping
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<UserModel> newUser(@RequestBody @Valid UserDto userDto) {
         return userService.createNewUser(userDto);
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<UserModel>> listAllUsers() {
         return userService.listAllUsers();
     }
 
     @GetMapping("/actives")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<UserModel>> listActiveUsers() {
         return userService.listActiveUsers();
     }
 
     @GetMapping("/inactives")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<UserModel>> listInactiveUsers() {
         return userService.listInactiveUsers();
     }
 
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<String> deactivateUser(@PathVariable(value = "id") UUID id) {
         return userService.deactivateUser(id);
     }
