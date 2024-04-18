@@ -2,9 +2,14 @@ package com.jessicaarf.springbootapiproducts.controllers;
 
 import com.jessicaarf.springbootapiproducts.dtos.LoginRequest;
 import com.jessicaarf.springbootapiproducts.dtos.LoginResponse;
-import com.jessicaarf.springbootapiproducts.models.RoleModel;
-import com.jessicaarf.springbootapiproducts.models.UserModel;
+import com.jessicaarf.springbootapiproducts.models.Role;
+import com.jessicaarf.springbootapiproducts.models.User;
 import com.jessicaarf.springbootapiproducts.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,22 +29,17 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/login")
+@RequiredArgsConstructor
 public class TokenController {
 
     private final JwtEncoder jwtEncoder;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.jwtEncoder = jwtEncoder;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
     @PostMapping
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
-        Optional<UserModel> user = userRepository.findByUsername(loginRequest.username());
+        Optional<User> user = userRepository.findByUsername(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
             log.error("Login failed.", loginRequest.username());
@@ -52,7 +52,7 @@ public class TokenController {
 
         String scopes = user.get().getRoles()
                 .stream()
-                .map(RoleModel::getName)
+                .map(Role::getName)
                 .collect(Collectors.joining(" "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()

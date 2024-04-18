@@ -1,5 +1,4 @@
 package com.jessicaarf.springbootapiproducts.models;
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "idProduct")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductModel implements Serializable {
+public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -44,6 +43,6 @@ public class ProductModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserModel userModel;
+    private User userModel;
 
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "tb_users")
 @Getter
 @Setter
-public class UserModel implements Serializable{
+public class User implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -32,7 +32,7 @@ public class UserModel implements Serializable{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<RoleModel> roles;
+    private Set<Role> roles;
 
     private boolean isActive;
 

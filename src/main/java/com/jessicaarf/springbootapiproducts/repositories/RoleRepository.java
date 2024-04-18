@@ -1,13 +1,13 @@
 package com.jessicaarf.springbootapiproducts.repositories;
 
 
-import com.jessicaarf.springbootapiproducts.models.RoleModel;
+import com.jessicaarf.springbootapiproducts.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 
 @Repository
-public interface RoleRepository extends JpaRepository<RoleModel, Long> {
-    RoleModel findByName(String name);
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(String name);
 }

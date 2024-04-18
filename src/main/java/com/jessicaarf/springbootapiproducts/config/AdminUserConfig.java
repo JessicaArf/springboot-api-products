@@ -1,7 +1,7 @@
 package com.jessicaarf.springbootapiproducts.config;
 
-import com.jessicaarf.springbootapiproducts.models.RoleModel;
-import com.jessicaarf.springbootapiproducts.models.UserModel;
+import com.jessicaarf.springbootapiproducts.models.Role;
+import com.jessicaarf.springbootapiproducts.models.User;
 import com.jessicaarf.springbootapiproducts.repositories.RoleRepository;
 import com.jessicaarf.springbootapiproducts.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +33,14 @@ public class AdminUserConfig implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception{
 
-       RoleModel roleAdmin = roleRepository.findByName(RoleModel.Values.ADMIN.name());
+       Role roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name());
 
-        Optional<UserModel> userAdmin = userRepository.findByUsername("admin");
+        Optional<User> userAdmin = userRepository.findByUsername("admin");
 
         userAdmin.ifPresentOrElse(
                 user -> log.info("Admin already exists."),
                 () -> {
-                    var user = new UserModel();
+                    var user = new User();
                     user.setUsername("admin");
                     user.setPassword(passwordEncoder.encode("admin"));
                     user.setRoles(Set.of(roleAdmin));
